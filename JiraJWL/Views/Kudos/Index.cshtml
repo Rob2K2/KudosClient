@@ -1,0 +1,119 @@
+﻿
+@model IEnumerable<JiraJWL.Modelos.Kudos>
+
+@{
+    ViewBag.Title = "Kudos Project";
+}
+
+<div class="jumbotron">
+    <h1>KUDOS</h1>
+    <p class="lead">Lista de kudos del sistema.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @if (TempData["successful"] != null)
+        {
+            <div class="alert alert-success alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <strong>Éxito: </strong>El worklog se agregó exitosamente al issue: @TempData["successful"].
+            </div>
+        }
+        @if (TempData["alert"] != null)
+        {
+            <div class="alert alert-info alert-dismissable">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                <span class="fa fa-bell"> </span><strong> El tiempo agregado superó el 10% del total estimado.</strong>
+            </div>
+        }
+        <form id="frmCreate" data-parsley-validate class="form-horizontal form-label-left" method="get" action="Create">
+            <div class="form-group">
+                <div class="col-sm-9 col-lg-7 col-lg-offset-4">
+                    <div class="control-group">
+                        <button type="submit" class="btn btn-primary" value="Buscar">Crear Kudos</button>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </form>
+    </div>
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Fuente
+                        </th>
+                        <th>
+                            Destino
+                        </th>
+                        <th>
+                            Tema
+                        </th>
+                        <th>
+                            Texto
+                        </th>
+                        <th>
+                            Fecha
+                        </th>
+                        <th>
+                            Lugar
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.KudosID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fuente)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Destino)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tema)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Texto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Fecha)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Lugar)
+                            </td>
+                            <td>
+                                <form id="frmAddWorklog" data-parsley-validate class="form-horizontal form-label-left" action="Delete" method="post">
+                                    <input type="hidden" name="id" value="@item.KudosID" />
+                                    <input type="hidden" name="destino" value="@item.Destino" />
+                                    <button type="submit" class="btn btn-success">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>No se encontraron resultados</strong>
+            </div>
+        }
+    }
+</div>
