@@ -36,10 +36,10 @@ namespace JiraJWL.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
 
-            bool resultSign = SignJIRA(model.Email, model.Password);
+            bool resultLogIn = LogInResult(model.Email, model.Password);
 
             //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            if (true)
+            if (resultLogIn)
             {
                 return RedirectToLocal(returnUrl);
             }
@@ -59,26 +59,16 @@ namespace JiraJWL.Controllers
             return RedirectToAction("Index", "Home");
         }
                
-        private bool SignJIRA(string email, string password)
+        private bool LogInResult(string email, string password)
         {
-            bool resultSign = false;
-            var client = new RestClient("https://bcomunidad.atlassian.net/rest/auth/1/session");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddParameter("application/json", "{\r\n    \"username\": \"" + email + "\",\r\n    \"password\": \"" + password + "\"\r\n}", ParameterType.RequestBody);
-            var response = client.Execute(request);
-
-            if (response.StatusCode.ToString() == "OK")
+            if (email == "merino@live.com" && password == "12345")
             {
-                Session["name"] = response.Cookies[1].Name;
-                Session["value"] = response.Cookies[1].Value;
-                resultSign = true;
+                return true;
             }
             else
             {
-                resultSign = false;
+                return false;
             }
-            return resultSign;
         }
     }
 }
