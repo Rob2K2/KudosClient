@@ -20,5 +20,7 @@ namespace JiraJWL.Modelos
         public string NickName { get; set; }
 
         public int TotalKudos { get; set; }
+
+        public int Edad { get; set; }
     }
 }

@@ -11,6 +11,8 @@ namespace JiraJWL.Controllers
 {
     public class KudosController : Controller
     {
+        List<User> users = new List<User>();
+
         // GET: Kudos
         public ActionResult Index()
         {
@@ -123,13 +125,38 @@ namespace JiraJWL.Controllers
 
         private List<User> GetUsers()
         {
-            var client = new RestClient("http://localhost:58443/api/user");
-            var request = new RestRequest(Method.GET);
+            User user1 = new User
+            {
+                UserID = 1,
+                FirstName = "Roberto",
+                LastName = "Merino",
+                NickName = "RVD",
+                TotalKudos = 0
+            };
 
-            request.AddHeader("Content-Type", "application/json");
-            var response = client.Execute<List<User>>(request);
+            User user2 = new User
+            {
+                UserID = 2,
+                FirstName = "Elena",
+                LastName = "Arce",
+                NickName = "Helen",
+                TotalKudos = 0
+            };
 
-            return response.Data;
+            User user3 = new User
+            {
+                UserID = 3,
+                FirstName = "Diego",
+                LastName = "Bellido",
+                NickName = "Belli",
+                TotalKudos = 0
+            };
+
+            users.Add(user1);
+            users.Add(user2);
+            users.Add(user3);
+
+            return users;
         }
     }
 }

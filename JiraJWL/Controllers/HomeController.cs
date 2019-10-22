@@ -181,5 +181,22 @@ namespace JiraJWL.Controllers
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             var response = client.Execute(request);
         }
+
+        public bool EsValido(User user)
+        {
+            var valido = true;
+
+            if (user.Edad > 200)
+            {
+                valido = false;
+            }
+
+            if (user.Edad < 0)
+            {
+                valido = false;
+            }
+
+            return valido;
+        }
     }
 }
